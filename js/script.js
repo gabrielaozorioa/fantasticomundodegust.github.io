@@ -1,13 +1,111 @@
-document.getElementById('rsvpForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
+/*!
+    * Start Bootstrap - Freelancer v6.0.3 (https://startbootstrap.com/themes/freelancer)
+    * Copyright 2013-2020 Start Bootstrap
+    * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-freelancer/blob/master/LICENSE)
+    */
+    (function($) {
+    "use strict"; // Start of use strict
+  
+    // Smooth scrolling using jQuery easing
+    $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
+      if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+        if (target.length) {
+          $('html, body').animate({
+            scrollTop: (target.offset().top - 71)
+          }, 1000, "easeInOutExpo");
+          return false;
+        }
+      }
+    });
+  
+    // Scroll to top button appear
+    $(document).scroll(function() {
+      var scrollDistance = $(this).scrollTop();
+      if (scrollDistance > 100) {
+        $('.scroll-to-top').fadeIn();
+      } else {
+        $('.scroll-to-top').fadeOut();
+      }
+    });
+  
+    // Closes responsive menu when a scroll trigger link is clicked
+    $('.js-scroll-trigger').click(function() {
+      $('.navbar-collapse').collapse('hide');
+    });
+  
+    // Activate scrollspy to add active class to navbar items on scroll
+    $('body').scrollspy({
+      target: '#mainNav',
+      offset: 80
+    });
+  
+    // Collapse Navbar
+    var navbarCollapse = function() {
+      if ($("#mainNav").offset().top > 100) {
+        $("#mainNav").addClass("navbar-shrink");
+      } else {
+        $("#mainNav").removeClass("navbar-shrink");
+      }
+    };
+    // Collapse now if page is not at top
+    navbarCollapse();
+    // Collapse the navbar when page is scrolled
+    $(window).scroll(navbarCollapse);
+  
+    // Floating label headings for the contact form
+    $(function() {
+      $("body").on("input propertychange", ".floating-label-form-group", function(e) {
+        $(this).toggleClass("floating-label-form-group-with-value", !!$(e.target).val());
+      }).on("focus", ".floating-label-form-group", function() {
+        $(this).addClass("floating-label-form-group-with-focus");
+      }).on("blur", ".floating-label-form-group", function() {
+        $(this).removeClass("floating-label-form-group-with-focus");
+      });
+    });
 
-    // Get form values
-    var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
+    const createEmailTooltip = function () {
+      const myEmail = document.getElementById("myEmail");
+      const tooltipMyEmail = document.getElementById("tooltipMyEmail");
 
-    // Dummy confirmation message (replace with actual functionality)
-    var message = 'Olá, ' + name + '! Sua presença foi confirmada. Obrigado!';
+      myEmail.onclick = function() {
+        document.execCommand("copy");
+      }
 
-    // Display confirmation message
-    document.getElementById('message').innerText = message;
-});
+      tooltipMyEmail.onclick = function() {
+        document.execCommand("copy");
+      }
+
+      myEmail.addEventListener("copy", function(event) {
+        event.preventDefault();
+        if (event.clipboardData) {
+          event.clipboardData.setData("text/plain", myEmail.textContent);
+          var tooltipMyEmail = document.getElementById("tooltipMyEmail");
+          tooltipMyEmail.innerHTML = "Copied!";
+        }
+      });
+
+      tooltipMyEmail.addEventListener("copy", function(event) {
+        event.preventDefault();
+        if (event.clipboardData) {
+          event.clipboardData.setData("text/plain", myEmail.textContent);
+          tooltipMyEmail.innerHTML = "Copied!";
+        }
+      });
+
+      myEmail.onmouseout = function() {
+        var tooltipMyEmail = document.getElementById("tooltipMyEmail");
+        tooltipMyEmail.innerHTML = "Click & Copy";
+      }
+
+      tooltipMyEmail.onmouseout = function() {
+        var tooltipMyEmail = document.getElementById("tooltipMyEmail");
+        tooltipMyEmail.innerHTML = "Click & Copy";
+      }
+    }
+
+    createEmailTooltip();
+  
+  })(jQuery); // End of use strict
+  
